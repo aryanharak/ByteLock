@@ -2,6 +2,7 @@
 
 ByteLock is a small, browser‑based file locker that lets you encrypt and decrypt any file using a password.  
 Everything happens locally in your browser – no uploads, no backend, no tracking.
+A College Project.
 
 ## Features
 
