@@ -1,7 +1,7 @@
  let selectedFile = null;
         let currentMode = 'encrypt';
 
-        // Tab switching
+      
         function switchTab(mode) {
             currentMode = mode;
             document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
@@ -13,20 +13,20 @@
             hideAlert();
         }
 
-        // Toggle password visibility
+     
         function togglePassword() {
             const passwordInput = document.getElementById('password');
             passwordInput.type = document.getElementById('showPassword').checked ? 'text' : 'password';
         }
 
-        // File selection
+
         document.getElementById('fileInput').addEventListener('change', function(e) {
             if (e.target.files.length > 0) {
                 handleFile(e.target.files[0]);
             }
         });
 
-        // Drag and drop
+        
         const uploadArea = document.getElementById('uploadArea');
         
         uploadArea.addEventListener('dragover', (e) => {
@@ -63,7 +63,7 @@
             return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
         }
 
-        // Simple XOR encryption/decryption
+
         function generateKey(password) {
             const key = new Uint8Array(256);
             const passLen = password.length;
@@ -110,43 +110,42 @@
                 let filename;
 
                 if (currentMode === 'encrypt') {
-                    // Generate random salt
+
                     const salt = new Uint8Array(16);
                     crypto.getRandomValues(salt);
                     
-                    // Mix salt into key
+    
                     const mixedKey = new Uint8Array(key);
                     for (let i = 0; i < mixedKey.length; i++) {
                         mixedKey[i] ^= salt[i % 16];
                     }
                     
-                    // Encrypt
+         
                     const encrypted = xorCrypt(data, mixedKey);
                     
-                    // Combine salt + encrypted data
+                
                     result = new Uint8Array(16 + encrypted.length);
                     result.set(salt, 0);
                     result.set(encrypted, 16);
                     
                     filename = selectedFile.name + '.encrypted';
                 } else {
-                    // Decrypt
+                   
                     if (data.length < 16) {
                         showAlert('Invalid encrypted file!', 'error');
                         return;
                     }
-                    
-                    // Extract salt
+
                     const salt = data.slice(0, 16);
                     const encryptedData = data.slice(16);
                     
-                    // Mix salt into key
+
                     const mixedKey = new Uint8Array(key);
                     for (let i = 0; i < mixedKey.length; i++) {
                         mixedKey[i] ^= salt[i % 16];
                     }
                     
-                    // Decrypt
+                
                     result = xorCrypt(encryptedData, mixedKey);
                     
                     filename = selectedFile.name.replace('.encrypted', '');
@@ -155,7 +154,7 @@
                     }
                 }
 
-                // Download the file
+      
                 const blob = new Blob([result]);
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
@@ -180,4 +179,5 @@
 
         function hideAlert() {
             document.getElementById('alert').classList.remove('show');
+
         }
