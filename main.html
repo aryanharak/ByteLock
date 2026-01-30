@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Encryption/Decryption Tool</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>File Encryption Tool</h1>
+        <p class="subtitle">Secure your files with password protection</p>
+
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('encrypt')"> Encrypt</button>
+            <button class="tab" onclick="switchTab('decrypt')"> Decrypt</button>
+        </div>
+
+        <div class="alert" id="alert"></div>
+
+        <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+            <div class="upload-icon"></div>
+            <div class="upload-text">Click to select a file or drag & drop here</div>
+        </div>
+
+        <input type="file" id="fileInput">
+
+        <div class="file-info" id="fileInfo">
+            <div class="file-name" id="fileName"></div>
+            <div class="file-size" id="fileSize"></div>
+        </div>
+
+        <div class="password-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter a strong password">
+            <div class="show-password">
+                <input type="checkbox" id="showPassword" onchange="togglePassword()">
+                <label for="showPassword">Show password</label>
+            </div>
+        </div>
+
+        <button class="action-btn" id="actionBtn" onclick="processFile()" disabled>
+            <span id="btnText">🔒 Encrypt File</span>
+        </button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
